@@ -25,12 +25,8 @@
 
   const expanded = ref(false)
 
-  /**
-   * so we have the format "preTextNormal [pretransformed pt1 <buttonText> preTransformed pt2|postTransformed](handle) postTextNormal"
-   * Which read preExtension : preTextNormal + pretransformed pt1 + buttonText + preTransformed pt2 + postTextNormal
-   * And after extension : preTextNormal + postTransformed + postTextNormal
-   */
-  const regex = /(.*)\[(.*)<(.*)>(.*)\|(.*)\]\((.*)\)(.*)/
+  
+  const regex = /(.*)\[(.*)<(.*)>(.*)\|(.*)\]\((.*?)\)(.*)/
   const matches = expansionMap[handle].match(regex)
   if (matches) {
     ;[expansionStruct.value, preTextNormal.value, pretransformed1.value, buttonText.value, pretransformed2.value, postTransformed.value, textHandle.value, postTextNormal.value] = matches
