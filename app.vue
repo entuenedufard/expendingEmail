@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="max-w-4xl p-10 pt-16 mx-auto">
-      <TextModule handle="initial-block"></TextModule>
-      <!-- <pre>{{ ao_modules }}</pre> -->
+      <!-- <TextModule handle="initial-block"></TextModule> -->
+      <pre>{{ ao_modules }}</pre>
     </div>
   </div>
 </template>
@@ -29,6 +29,20 @@
 
   const { data: ao_modules } = await useFetch(`${apiBaseUrl}/api/associative-ontologies?populate=${querySlug}`, {
     transform: (rawValue) => {
+      rawValue.data.forEach((module, moduleIndex) => {
+        // add an expandable property set to false to each expandable-text-block
+        console.log("module yo", module.title)
+        //rawValue.data[moduleIndex].expanded = "yolo";
+        module.content.forEach((block, blockIndex) => {
+          console.log("block", block)
+          //rawValue.data[moduleIndex].content[blockIndex].expanded = false;
+          if (block.__component == "associative-ontologies.expandable-text-block") {
+            console.log("moduleIndex", moduleIndex)
+            console.log("blockIndex", blockIndex)
+            rawValue.data[moduleIndex].content[blockIndex].expanded = false
+          }
+        })
+      })
       return rawValue.data
     },
   })
