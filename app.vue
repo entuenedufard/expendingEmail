@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="max-w-4xl p-10 pt-16 mx-auto">
-      <TextModule handle="text1"></TextModule >
+      <!-- <TextModule handle="text1"></TextModule > -->
+      <pre>{{ ao_modules }}</pre>
     </div>
   </div>
 </template>
@@ -25,20 +26,28 @@ Che rekarte ça au plus fite et che refiens fers fous.`,
 
   provide("expansionMap", expansionMap)
 
-  const expand = () => {
-    console.log("coucou")
-  }
+  const runtimeConfig = useRuntimeConfig()
+  const apiBaseUrl = runtimeConfig.public.apiBaseUrl
 
-  /* const testString = "partie un [[extrait 1 pre <link1> extrait 1 post|handle1]] partie deux [[extrait 2 pre <link2> extrait 2 post|handle2]] partie trois"
-  const regex = /\[\[(.*?)\<(.*?)\>(.*?)\|(.*?)\]\]/g
-  const matches = testString.matchAll(regex)
-  let matchArray = Array.from(matches)
-  for (let match of matches){
-    console.log("match", match)
-    //matchArray.value[index] = match
-  }
-  matchArray.forEach((match, index) => {
-    console.log("match "+index, match)
-  }) */
-  //console.log("matchArray", matchArray)
+  import * as qs from "qs"
+
+  //build qs query to filter projects with slug
+  const querySlug = qs.stringify(
+    {
+      populate: {
+        content: {
+          populate: ["associative_ontologies_module", "associative_ontologies_module.mqsdljk"], // I still don't understand but I have to put a .wtf for it to work
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  )
+
+  const { data: ao_modules } = await useFetch(`${apiBaseUrl}/api/associative-ontologies?populate=${querySlug}`, {
+    transform: (rawValue) => {
+      return rawValue.data
+    },
+  })
 </script>
