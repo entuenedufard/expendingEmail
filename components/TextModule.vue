@@ -1,11 +1,10 @@
-
 <template>
-  <span v-for="(contentBit, index) in content">
+  <span class="opacity-100" :class="{ 'duration-700': transitionValue, 'opacity-100': transitionValue }" v-for="(contentBit, index) in content">
     <span>{{ contentBit.whateverBefore }}</span>
     <span v-if="!contentBit.expanded">{{ contentBit.preTransformed1 }}</span>
     <span v-if="!contentBit.expanded" class="text-blue-500 hover:bg-purple-500 hover:text-white cursor-pointer" @click="expand(index)">{{ contentBit.buttonText }}</span>
     <span v-if="!contentBit.expanded">{{ contentBit.preTransformed2 }}</span>
-    <TextModule v-if="contentBit.expanded" :handle="contentBit.textHandle"></TextModule>
+    <TextModule class="opacity-50" v-if="contentBit.expanded" :handle="contentBit.textHandle"></TextModule>
     <span v-if="contentBit.expanded" class="text-blue-500 hover:bg-purple-500 hover:text-white cursor-pointer" @click="foldBack(index)">¬</span>
     <span>{{ contentBit.whateverAfter }}</span>
   </span>
@@ -20,6 +19,7 @@
   const expansionMap = inject("expansionMap")
   const matchArray = ref([])
   const content = ref([])
+  const transitionValue = ref(true)
 
   const regex = /((?:.|\n)*?)\[\[(.*?)\<(.*?)\>(.*?)\|(.*?)\]\]/gm // matches  "whatever before [[preTextNormal <pretransformed1> buttonText|textHandle]]" multiple times (but not whatever after)
   const matches = expansionMap[handle].matchAll(regex)
