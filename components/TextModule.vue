@@ -1,16 +1,20 @@
 <template>
-  <span v-for="(block, index) in moduleContent">
-    <span v-if="block.__component == 'associative-ontologies.normal-text-block'" v-html="block.text"></span>
-    <span v-if="!block.expanded">
-      <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" v-html="block.pre_button"></span>
-      <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" class="text-blue-500 hover:bg-purple-500 hover:text-white cursor-pointer" @click="expand(index)" v-html="block.button"></span>
-      <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" v-html="block.post_button"></span>
+  <span>
+    <span v-for="(block, index) in moduleContent">
+      <span v-if="block.__component == 'associative-ontologies.normal-text-block'" v-html="block.text"></span>
+      <span v-if="!block.expanded">
+        <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" v-html="block.pre_button"></span>
+        <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" class="bg-gray-300 hover:bg-gray-400 px-1 py-0.5 cursor-pointer" @click="expand(index)" v-html="block.button"></span>
+        <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" v-html="block.post_button"></span>
+      </span>
+      <span v-else :class="{ 'bg-purple-300': foldbackHover[index] }">
+        <TextModule :handle="block.associative_ontologies_module.slug_handle" class="bg-yellow-200"></TextModule>
+        <span class="text-blue-500 hover:bg-purple-300 hover:text-white cursor-pointer" @click="foldBack(index)" @mouseover="foldbackHover[index] = true" @mouseleave="foldbackHover[index] = false">
+          <img src="/foldback.png" class="inline h-6" alt="" />
+        </span>
+      </span>
+      <!-- <pre>{{ moduleContent }}</pre> -->
     </span>
-    <span v-else :class="{ 'bg-purple-300': foldbackHover[index] }">
-      <TextModule :handle="block.associative_ontologies_module.slug_handle"></TextModule>
-      <span class="text-blue-500 hover:bg-purple-300 hover:text-white cursor-pointer" @click="foldBack(index)" @mouseover="foldbackHover[index] = true" @mouseleave="foldbackHover[index] = false">¬</span>
-    </span>
-    <!-- <pre>{{ moduleContent }}</pre> -->
   </span>
 </template>
 

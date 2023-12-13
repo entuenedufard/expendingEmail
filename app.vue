@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="max-w-4xl p-10 pt-16 mx-auto">
+    <div class="max-w-4xl p-10 pt-16 mx-auto text-xl">
       <p><TextModule handle="initial-block"></TextModule></p>
       <!-- <pre>{{ ao_modules }}</pre> -->
     </div>
@@ -38,7 +38,7 @@
             rawValue.data[moduleIndex].content[blockIndex].button = block.button ? block.button.replaceAll("\n", "</br>") : ""
             rawValue.data[moduleIndex].content[blockIndex].post_button = block.post_button ? block.post_button.replaceAll("\n", "</br>") : ""
             rawValue.data[moduleIndex].content[blockIndex].expanded = false
-            console.log("block yola", block)
+            //console.log("block yola", block)
           }
           if (block.__component == "associative-ontologies.normal-text-block") {
             rawValue.data[moduleIndex].content[blockIndex].text = block.text ? block.text.replaceAll("\n", "</br>") : ""
