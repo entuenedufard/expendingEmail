@@ -7,12 +7,14 @@
         <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" class="bg-gray-300 hover:bg-gray-400 px-1 py-0.5 cursor-pointer" @click="expand(index)" v-html="block.button"></span>
         <span v-if="block.__component == 'associative-ontologies.expandable-text-block'" v-html="block.post_button"></span>
       </span>
-      <span v-else :class="{ 'bg-purple-300': foldbackHover[index] }">
-        <TextModule :handle="block.associative_ontologies_module.slug_handle" class="bg-yellow-200"></TextModule>
-        <span class="text-blue-500 hover:bg-purple-300 hover:text-white cursor-pointer" @click="foldBack(index)" @mouseover="foldbackHover[index] = true" @mouseleave="foldbackHover[index] = false">
-          <img src="/foldback.png" class="inline h-6" alt="" />
+      <transition enter-active-class="duration-[4000ms]" enter-from-class="bg-yellow-300/100" enter-to-class="bg-yellow-300/0">
+        <span v-if="block.expanded" :class="{ 'bg-purple-300': foldbackHover[index] }">
+          <TextModule :handle="block.associative_ontologies_module.slug_handle"></TextModule>
+          <span class="text-blue-500 hover:bg-purple-300 hover:text-white cursor-pointer" @click="foldBack(index)" @mouseover="foldbackHover[index] = true" @mouseleave="foldbackHover[index] = false">
+            <img src="/foldback.png" class="inline h-6" alt="" />
+          </span>
         </span>
-      </span>
+      </transition>
       <!-- <pre>{{ moduleContent }}</pre> -->
     </span>
   </span>
